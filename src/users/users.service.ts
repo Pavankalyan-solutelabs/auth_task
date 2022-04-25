@@ -5,13 +5,17 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { userEntity } from './entities/user-entity';
 
+
 @Injectable()
 export class UsersService {
 
   constructor(@InjectRepository(userEntity) private userRepo:Repository<userEntity>){}
 
   async create(createUserInput: CreateUserInput):Promise<userEntity> {
-    return ;
+
+    let user=await this.userRepo.create(createUserInput)
+    console.log("service",user);
+    return this.userRepo.save(user) ;
   }
 
   async findAll():Promise<userEntity[]> {
@@ -19,7 +23,7 @@ export class UsersService {
   }
 
   async findOne(userName:string):Promise<userEntity> {
-    return this.userRepo.findOne(userName)
+    return this.userRepo.findOne({where:{username:userName}})
   }
 
 }

@@ -7,12 +7,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { config } from './orm.config';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
+  imports: [UsersModule,GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
     autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-  }), TypeOrmModule.forRoot(config),UsersModule],
+  }), TypeOrmModule.forRoot(config), AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
